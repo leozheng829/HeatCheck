@@ -44,7 +44,7 @@ for element in td_elements:
         current_game = []
 
 for idx, game in enumerate(game_data, start=1):
-    # print(f"Game {idx}: {game}")
+    print(f"Game {idx}: {game}")
     date.append(game[0])
     min.append(game[1])
     pts.append(game[2])
