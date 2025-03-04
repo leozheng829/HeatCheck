@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
 import Select from "react-select";
-import * as NBAIcons from "react-nba-logos";
 
 const API_URL = "http://127.0.0.1:5000/api/stats";
+const PLAYERS_API_URL = "http://127.0.0.1:5000/api/players";
 
 const nbaTeams = [
   { value: "Hawk", label: "Atlanta Hawks" },
@@ -40,19 +40,46 @@ const nbaTeams = [
 ];
 
 function App() {
-  const [player, setPlayer] = useState("");
+  const [player, setPlayer] = useState(null);
+  const [playersList, setPlayersList] = useState([]);
   const [team, setTeam] = useState(null);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Fetch players on component mount
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      try {
+        const response = await axios.get(PLAYERS_API_URL);
+        setPlayersList(
+          response.data.map((player) => ({
+            value: player.name,
+            label: player.name,
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching players:", error);
+        setPlayersList([]);
+      }
+    };
+
+    fetchPlayers();
+  }, []);
+
   const fetchStats = async () => {
+    if (!player || !team) {
+      setError("Please select a player and a team.");
+      return;
+    }
+
     setLoading(true);
     setError("");
     setData(null);
+
     try {
       const response = await axios.get(API_URL, {
-        params: { player, team: team?.value },
+        params: { player: player.value, team: team.value },
       });
       console.log("API Response:", response.data);
       setData(response.data);
@@ -60,6 +87,7 @@ function App() {
       console.error("Error fetching data:", error);
       setError("Failed to fetch data. Please check your inputs.");
     }
+
     setLoading(false);
   };
 
@@ -67,12 +95,16 @@ function App() {
     <div className="container">
       <h1>NBA Player Stats</h1>
       <div className="input-group">
-        <input
-          type="text"
-          placeholder="Enter Player Name"
+        {/* Searchable Player Dropdown */}
+        <Select
+          options={playersList}
           value={player}
-          onChange={(e) => setPlayer(e.target.value)}
+          onChange={setPlayer}
+          placeholder="Search for a player"
+          isSearchable
         />
+
+        {/* Searchable Team Dropdown */}
         <Select
           options={nbaTeams}
           value={team}
@@ -80,6 +112,7 @@ function App() {
           placeholder="Select Opponent Team"
           isSearchable
         />
+
         <button onClick={fetchStats} disabled={loading}>
           {loading ? "Loading..." : "Get Stats"}
         </button>
@@ -90,7 +123,7 @@ function App() {
       {data && (
         <div className="stats">
           <h2>
-            Stats for {player} vs {team?.label}
+            Stats for {player?.label} vs {team?.label}
           </h2>
           <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
