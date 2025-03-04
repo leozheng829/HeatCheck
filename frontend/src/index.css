@@ -25,19 +25,24 @@ body {
 .input-group {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
 }
 
-input {
-  padding: 12px;
-  font-size: 18px;
+.select__control {
+  width: 200px !important;
+  height: 45px;
+  font-size: 16px;
+  text-align: center;
   border: 2px solid #c8102e;
   border-radius: 5px;
-  text-align: center;
 }
 
 button {
-  padding: 12px;
+  width: 200px;
+  height: 45px;
   font-size: 18px;
   background: #c8102e;
   color: white;
@@ -45,6 +50,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s;
+  font-weight: bold;
 }
 
 button:hover {
