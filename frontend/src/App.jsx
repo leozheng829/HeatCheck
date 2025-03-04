@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import Select from "react-select";
 
-const API_URL = "http://127.0.0.1:5000/api/stats";
+const API_URL = "http://127.0.0.1:5001/api/stats";
 const PLAYERS_API_URL = "http://127.0.0.1:5000/api/players";
 
 const nbaTeams = [
