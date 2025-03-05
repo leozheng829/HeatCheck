@@ -52,3 +52,24 @@
   text-align: center;
   margin: 10px;
 }
+
+.comparison-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.player-section,
+.team-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.versus {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}

@@ -4,41 +4,42 @@ import React from "react";
 import Select from "react-select";
 import TeamLogo from "/src/components/teamlogo.jsx";
 import PlayerImage from "/src/components/playerimage.jsx";
+import "./App.css";
 
 const API_URL = "http://127.0.0.1:5001/api/stats";
 const PLAYERS_API_URL = "http://127.0.0.1:5000/api/players";
 
 const nbaTeams = [
-  { value: "Hawk", label: "Atlanta Hawks" },
-  { value: "Celtic", label: "Boston Celtics" },
-  { value: "Net", label: "Brooklyn Nets" },
-  { value: "Hornet", label: "Charlotte Hornets" },
-  { value: "Bull", label: "Chicago Bulls" },
-  { value: "Cavalier", label: "Cleveland Cavaliers" },
-  { value: "Maverick", label: "Dallas Mavericks" },
-  { value: "Nugget", label: "Denver Nuggets" },
-  { value: "Piston", label: "Detroit Pistons" },
-  { value: "Warrior", label: "Golden State Warriors" },
-  { value: "Rocket", label: "Houston Rockets" },
-  { value: "Pacer", label: "Indiana Pacers" },
-  { value: "Clipper", label: "Los Angeles Clippers" },
-  { value: "Laker", label: "Los Angeles Lakers" },
-  { value: "Grizzlie", label: "Memphis Grizzlies" },
+  { value: "Hawks", label: "Atlanta Hawks" },
+  { value: "Celtics", label: "Boston Celtics" },
+  { value: "Nets", label: "Brooklyn Nets" },
+  { value: "Hornets", label: "Charlotte Hornets" },
+  { value: "Bulls", label: "Chicago Bulls" },
+  { value: "Cavaliers", label: "Cleveland Cavaliers" },
+  { value: "Mavericks", label: "Dallas Mavericks" },
+  { value: "Nuggets", label: "Denver Nuggets" },
+  { value: "Pistons", label: "Detroit Pistons" },
+  { value: "Warriors", label: "Golden State Warriors" },
+  { value: "Rockets", label: "Houston Rockets" },
+  { value: "Pacers", label: "Indiana Pacers" },
+  { value: "Clippers", label: "Los Angeles Clippers" },
+  { value: "Lakers", label: "Los Angeles Lakers" },
+  { value: "Grizzlies", label: "Memphis Grizzlies" },
   { value: "Heat", label: "Miami Heat" },
-  { value: "Buck", label: "Milwaukee Bucks" },
-  { value: "Timberwolve", label: "Minnesota Timberwolves" },
-  { value: "Pelican", label: "New Orleans Pelicans" },
-  { value: "Knick", label: "New York Knicks" },
+  { value: "Bucks", label: "Milwaukee Bucks" },
+  { value: "Timberwolves", label: "Minnesota Timberwolves" },
+  { value: "Pelicans", label: "New Orleans Pelicans" },
+  { value: "Knicks", label: "New York Knicks" },
   { value: "Thunder", label: "Oklahoma City Thunder" },
   { value: "Magic", label: "Orlando Magic" },
-  { value: "76er", label: "Philadelphia 76ers" },
-  { value: "Sun", label: "Phoenix Suns" },
-  { value: "Blazer", label: "Portland Trail Blazers" },
-  { value: "King", label: "Sacramento Kings" },
-  { value: "Spur", label: "San Antonio Spurs" },
-  { value: "Raptor", label: "Toronto Raptors" },
+  { value: "76ers", label: "Philadelphia 76ers" },
+  { value: "Suns", label: "Phoenix Suns" },
+  { value: "Blazers", label: "Portland Trail Blazers" },
+  { value: "Kings", label: "Sacramento Kings" },
+  { value: "Spurs", label: "San Antonio Spurs" },
+  { value: "Raptors", label: "Toronto Raptors" },
   { value: "Jazz", label: "Utah Jazz" },
-  { value: "Wizard", label: "Washington Wizards" },
+  { value: "Wizards", label: "Washington Wizards" },
 ];
 
 function App() {
@@ -94,7 +95,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>NBA Player Stats</h1>
+      <h1>🏀 NBA Player Stats 🏀</h1>
       <div className="input-group">
         <Select
           options={playersList}
@@ -116,9 +117,19 @@ function App() {
           {loading ? "Loading..." : "Get Stats"}
         </button>
       </div>
-      {team && <TeamLogo team={team} />} {/* Display the team logo */}
-      {player && <PlayerImage player={player} />}{" "}
-      {/* Display the player image */}
+
+      {player && team && (
+        <div className="comparison-container">
+          <div className="player-section">
+            <PlayerImage player={player} />
+          </div>
+          <div className="versus">VS.</div>
+          <div className="team-section">
+            <TeamLogo team={team} />
+          </div>
+        </div>
+      )}
+
       {error && <p className="error">{error}</p>}
       {data && (
         <div className="stats">
