@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
 import Select from "react-select";
+import TeamLogo from "/src/components/teamlogo.jsx";
 
 const API_URL = "http://127.0.0.1:5001/api/stats";
 const PLAYERS_API_URL = "http://127.0.0.1:5000/api/players";
@@ -47,7 +48,6 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Fetch players on component mount
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
@@ -95,7 +95,6 @@ function App() {
     <div className="container">
       <h1>NBA Player Stats</h1>
       <div className="input-group">
-        {/* Searchable Player Dropdown */}
         <Select
           options={playersList}
           value={player}
@@ -104,7 +103,6 @@ function App() {
           isSearchable
         />
 
-        {/* Searchable Team Dropdown */}
         <Select
           options={nbaTeams}
           value={team}
@@ -117,9 +115,8 @@ function App() {
           {loading ? "Loading..." : "Get Stats"}
         </button>
       </div>
-
+      {team && <TeamLogo team={team} />} {/* Display the team logo */}
       {error && <p className="error">{error}</p>}
-
       {data && (
         <div className="stats">
           <h2>
