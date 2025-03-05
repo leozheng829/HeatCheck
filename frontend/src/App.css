@@ -40,3 +40,15 @@
 .read-the-docs {
   color: #888;
 }
+
+.team-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+.player-image-container {
+  text-align: center;
+  margin: 10px;
+}

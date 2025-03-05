@@ -3,6 +3,7 @@ import axios from "axios";
 import React from "react";
 import Select from "react-select";
 import TeamLogo from "/src/components/teamlogo.jsx";
+import PlayerImage from "/src/components/playerimage.jsx";
 
 const API_URL = "http://127.0.0.1:5001/api/stats";
 const PLAYERS_API_URL = "http://127.0.0.1:5000/api/players";
@@ -116,6 +117,8 @@ function App() {
         </button>
       </div>
       {team && <TeamLogo team={team} />} {/* Display the team logo */}
+      {player && <PlayerImage player={player} />}{" "}
+      {/* Display the player image */}
       {error && <p className="error">{error}</p>}
       {data && (
         <div className="stats">
