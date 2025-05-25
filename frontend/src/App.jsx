@@ -56,12 +56,17 @@ function App() {
     const fetchPlayers = async () => {
       try {
         const response = await axios.get(PLAYERS_API_URL);
-        setPlayersList(
-          response.data.map((player) => ({
+        const sortedPlayers = response.data
+          .map((player) => ({
             value: player.name,
             label: player.name,
           }))
-        );
+          .sort((a, b) => {
+            const firstNameA = a.label.split(" ")[0];
+            const firstNameB = b.label.split(" ")[0];
+            return firstNameA.localeCompare(firstNameB);
+          });
+        setPlayersList(sortedPlayers);
       } catch (error) {
         console.error("Error fetching players:", error);
         setPlayersList([]);
