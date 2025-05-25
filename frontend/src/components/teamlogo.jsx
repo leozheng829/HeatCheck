@@ -6,7 +6,7 @@ const teamMappings = {
   Celtics: NBAIcons.BOS,
   Nets: NBAIcons.BKN,
   Hornets: NBAIcons.CHA,
-  Bulls: NBAIcons.CHI,
+  Bull: NBAIcons.CHI,
   Cavaliers: NBAIcons.CLE,
   Mavericks: NBAIcons.DAL,
   Nuggets: NBAIcons.DEN,

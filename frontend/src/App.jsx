@@ -4,17 +4,19 @@ import React from "react";
 import Select from "react-select";
 import TeamLogo from "/src/components/teamlogo.jsx";
 import PlayerImage from "/src/components/playerimage.jsx";
+import StatsVisualization from "/src/components/StatsVisualization.jsx";
 import "./App.css";
 
-const API_URL = "http://127.0.0.1:5001/api/stats";
-const PLAYERS_API_URL = "http://127.0.0.1:5000/api/players";
+const API_BASE_URL = "http://127.0.0.1:5000/api";
+const API_URL = `${API_BASE_URL}/stats`;
+const PLAYERS_API_URL = `${API_BASE_URL}/players`;
 
 const nbaTeams = [
   { value: "Hawks", label: "Atlanta Hawks" },
   { value: "Celtics", label: "Boston Celtics" },
   { value: "Nets", label: "Brooklyn Nets" },
   { value: "Hornets", label: "Charlotte Hornets" },
-  { value: "Bulls", label: "Chicago Bulls" },
+  { value: "Bull", label: "Chicago Bulls" },
   { value: "Cavaliers", label: "Cleveland Cavaliers" },
   { value: "Mavericks", label: "Dallas Mavericks" },
   { value: "Nuggets", label: "Denver Nuggets" },
@@ -122,23 +124,18 @@ function App() {
         <div className="comparison-container">
           <div className="player-section">
             <PlayerImage player={player} />
+            <div className="player-name">{player.label}</div>
           </div>
           <div className="versus">VS.</div>
           <div className="team-section">
             <TeamLogo team={team} />
+            <div className="team-name">{team.label}</div>
           </div>
         </div>
       )}
 
       {error && <p className="error">{error}</p>}
-      {data && (
-        <div className="stats">
-          <h2>
-            Stats for {player?.label} vs {team?.label}
-          </h2>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
-      )}
+      {data && <StatsVisualization statsData={data} />}
     </div>
   );
 }
