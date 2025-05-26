@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 # === Configuration for CSV ===
-CSV_PATH = "nba_players.csv"
+CSV_PATH = "backend/nba_players.csv"
 
 if not os.path.exists(CSV_PATH):
     raise FileNotFoundError(f"Error: CSV file not found at path: {CSV_PATH}")
