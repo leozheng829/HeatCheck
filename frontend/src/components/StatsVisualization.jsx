@@ -18,6 +18,7 @@ const Container = styled.div`
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   margin: 20px 0;
   border: 1px solid var(--border);
+  classname: glass-card;
 `;
 
 const Header = styled.div`
@@ -85,7 +86,7 @@ const AverageLabel = styled.span`
 `;
 
 const CustomTooltip = styled.div`
-  background: var(--surface);
+  background: rgba(30, 41, 59, 1);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
@@ -98,10 +99,13 @@ const StatsVisualization = ({ statsData }) => {
   const chartData = useMemo(() => {
     if (!statsData || !statsData[selectedStat]) return [];
 
-    return statsData[selectedStat].map((value, index) => ({
-      game: `Game ${index + 1}`,
-      value: value,
-    }));
+    return statsData[selectedStat]
+      .slice()
+      .reverse()
+      .map((value, index) => ({
+        game: `Game ${index + 1}`,
+        value: value,
+      }));
   }, [statsData, selectedStat]);
 
   const average = useMemo(() => {
@@ -144,7 +148,7 @@ const StatsVisualization = ({ statsData }) => {
   if (!statsData) return null;
 
   return (
-    <Container>
+    <Container className="glass-card">
       <Header>
         <Title>Performance Analysis</Title>
         <Select
@@ -159,7 +163,15 @@ const StatsVisualization = ({ statsData }) => {
         </Select>
       </Header>
 
-      <div style={{ width: "100%", height: 400 }}>
+      <div
+        style={{
+          width: "100%",
+          height: 400,
+          background: "rgba(30,41,59,0.95)",
+          borderRadius: 16,
+          padding: 16,
+        }}
+      >
         <ResponsiveContainer>
           <BarChart
             data={chartData}
@@ -170,7 +182,7 @@ const StatsVisualization = ({ statsData }) => {
               bottom: 5,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+            <CartesianGrid strokeDasharray="4 4" stroke="var(--border)" />
             <XAxis
               dataKey="game"
               stroke="var(--text-secondary)"
@@ -191,9 +203,16 @@ const StatsVisualization = ({ statsData }) => {
         </ResponsiveContainer>
       </div>
 
-      <AverageContainer>
+      <AverageContainer
+        style={{
+          background: "rgba(30,41,59,0.9)",
+          border: "1px solid var(--card-border)",
+        }}
+      >
         <AverageValue>{average}</AverageValue>
-        <AverageLabel>
+        <AverageLabel
+          style={{ color: "var(--text-secondary)", background: "none" }}
+        >
           Average {statOptions.find((opt) => opt.value === selectedStat)?.label}
         </AverageLabel>
       </AverageContainer>
