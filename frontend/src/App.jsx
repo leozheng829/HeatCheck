@@ -6,7 +6,7 @@ import StatsVisualization from "/src/components/StatsVisualization.jsx";
 import "./index.css";
 import TeamLogo from "./components/teamlogo.jsx";
 
-const API_BASE_URL = "http://127.0.0.1:5000/api";
+const API_BASE_URL = "https://heatcheckbackend.onrender.com/api";
 const API_URL = `${API_BASE_URL}/stats`;
 const PLAYERS_API_URL = `${API_BASE_URL}/players`;
 

@@ -6,9 +6,9 @@ import pandas as pd
 import os
 
 app = Flask(__name__)
-CORS(app)  # Allow requests from frontend
+CORS(app)
 
-# Load players data
+# === Configuration for CSV ===
 CSV_PATH = "nba_players.csv"
 
 if not os.path.exists(CSV_PATH):
@@ -18,18 +18,24 @@ try:
     df = pd.read_csv(CSV_PATH, encoding="utf-8", on_bad_lines="skip")
     required_columns = {"name", "image_url"}
     if not required_columns.issubset(df.columns):
-        raise ValueError(f"Error: CSV is missing required columns: {required_columns - set(df.columns)}")
+        raise ValueError(f"CSV is missing columns: {required_columns - set(df.columns)}")
 
     df = df.dropna(subset=["name", "image_url"])
 except Exception as e:
     raise RuntimeError(f"Error reading CSV: {e}")
 
+# === Health check route ===
+@app.route("/")
+def home():
+    return "🔥 HeatCheck Flask backend is live!"
+
+# === Player list ===
 @app.route("/api/players", methods=["GET"])
 def get_players():
-    """Returns a list of players for the searchable dropdown."""
     players = df[["name", "image_url"]].to_dict(orient="records")
     return jsonify(players)
 
+# === Scraped stats ===
 @app.route('/api/stats', methods=['GET'])
 def get_player_stats():
     player_name = request.args.get('player')
@@ -45,7 +51,7 @@ def get_player_stats():
 
     game_data = []
     current_game = []
-    
+
     stats = {
         "pts_rebs_asts": [],
         "points": [],
@@ -114,12 +120,13 @@ def get_player_stats():
             stats["blocks_steals"].append(blk + stl)
             stats["turnovers"].append(tov)
             stats["fantasy_score"].append(pts + (1.2 * reb) + (1.5 * ast) + (3 * blk) + (3 * stl) - tov)
-        
+
         except ValueError:
             continue
 
     return jsonify(stats)
 
-if __name__ == '__main__':
-    print("✅ Flask API running at http://127.0.0.1:5000")
-    app.run(debug=True, port=5000)
+# === Render-specific port configuration ===
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
