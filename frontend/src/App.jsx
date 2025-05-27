@@ -116,7 +116,7 @@ function App() {
             Welcome to Heat Check (A Statistics Dashboard)
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Created by a degen for degens.
+            Created by a a fan for fans.
           </p>
         </div>
 
